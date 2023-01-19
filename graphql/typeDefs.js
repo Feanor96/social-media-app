@@ -21,7 +21,7 @@ module.exports = gql`
         email: String!
         token: String!
         username: String!
-        createdAt: String!
+        createdAt: String
     }
     type Mutation {
         register(registerInput: RegisterInput): User!
