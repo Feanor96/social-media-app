@@ -38,7 +38,7 @@ module.exports = {
                 username,
                 password,
                 confirmPassword,
-                createdAt: new Date()
+                createdAt: new Date().toISOString()
             })
             const res = await newUser.save();
 
@@ -56,8 +56,6 @@ module.exports = {
             if (!user) {
                 errors.general = 'User not found';
                 throw new UserInputError('User not found', { errors });
-            } else {
-
             }
 
             const match = bcrypt.compare(password, user.password);
