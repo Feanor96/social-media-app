@@ -5,7 +5,7 @@ module.exports = {
     Query: {
         async getPosts() {
             try {
-                const posts = await Post.find();
+                const posts = await Post.find().sort({ createdAt: 1 });
                 return posts;
             } catch (error) {
                 throw new Error(error)
@@ -27,7 +27,11 @@ module.exports = {
     Mutation: {
         async createPost(_, { body }, context) {
             const user = checkAuth(context);
-    
+      
+            if (body.trim() === '') {
+              throw new Error('Post body must not be empty');
+            }
+      
             const newPost = new Post({
               body,
               user: user.id,
@@ -39,6 +43,17 @@ module.exports = {
       
       
             return post;
-          },
+        },
+        async deletePost(_, { postId }, context) {
+            const user = checkAuth(context);
+            
+            const post = await Post.findByIdAndDelete(postId);
+            if (post) {
+                return null;
+            } else {
+                throw new Error('Post not found');
+            }
+            
+        }
     }
 }
