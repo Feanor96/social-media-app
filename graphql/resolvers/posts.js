@@ -4,7 +4,7 @@ const checkAuth = require('../../utils/check-auth');
 const { AuthenticationError, UserInputError } = require('apollo-server');
 module.exports = {
     Query: {
-        async getPosts() {
+        async getPosts(parent) {
             try {
                 const posts = await Post.find().sort({ createdAt: -1 });
                 return posts
@@ -29,7 +29,7 @@ module.exports = {
         async createPost(_, { body }, context) {
             const user = checkAuth(context);
       
-            if (body.trim() === '') {
+            if (args.body.trim() === '') {
               throw new Error('Post body must not be empty');
             }
       
