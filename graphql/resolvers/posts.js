@@ -7,7 +7,7 @@ module.exports = {
         async getPosts() {
             try {
                 const posts = await Post.find().sort({ createdAt: -1 });
-                return posts;
+                return posts
             } catch (error) {
                 throw new Error(error)
             }
@@ -16,7 +16,7 @@ module.exports = {
             const post = await Post.findById(postId);
             try {
 	            if (post) {
-	                return post;
+                    return post;
 	            } else {
 	                throw new Error('Post not found')
 	            }
